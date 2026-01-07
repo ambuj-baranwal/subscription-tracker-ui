@@ -1,10 +1,8 @@
 import { ShoppingCart } from 'lucide-react';
-const StatCard = ({label, value, Icon, colorClass}) => {
-    if (!colorClass) {
-        colorClass = 'bg-purple-100';
-    }
+const StatCard = ({label, value, Icon, colorClass = 'bg-purple-100'}) => {
+
   return (
-      <div className='bg-white rounded-xl shadow-sm p-6 border border-gray-100 transition-transform duration-150 ease-in-out hover:scale-105 '>
+      <div className='bg-white rounded-xl shadow-sm p-6 border border-gray-100 transition-transform duration-150 hover:scale-[1.02]'>
           <div className='flex items-center justify-between'>
               <div>
                   {/*<p className='text-sm text-gray-600'>Active Subscriptions ( Name )</p>*/}

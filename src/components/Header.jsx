@@ -1,8 +1,11 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Bell, CalendarCheck, Menu, Plus} from "lucide-react";
 import {useState} from "react";
+import {useAuth} from "../hooks/useAuth.js";
 
 const Header = ({ onMenuClick }) => {
+    const navigate = useNavigate();
+    const { isAuthenticated, logout } = useAuth();
   return (
       <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-40">
              {/*remove max-w-7xl later*/}

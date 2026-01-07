@@ -1,8 +1,11 @@
-import {Link, useLocation} from "react-router-dom";
-import {LogOut, User, X} from "lucide-react";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {LogIn, LogOut, User, X} from "lucide-react";
+import {useAuth} from "../hooks/useAuth.js";
 
 const Sidebar = ({isOpen, setIsOpen, menuItems}) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
   return (
       <>
           {isOpen && (
@@ -22,7 +25,7 @@ const Sidebar = ({isOpen, setIsOpen, menuItems}) => {
                   </div>
           <nav className='flex-1 px-4 py-6 space-y-2'>
               {menuItems.map((item) => {
-                  console.log(location.pathname, item.path)
+                  // console.log(location.pathname, item.path)
                   const isActive = location.pathname === item.path;
                   return (
                       <Link
@@ -45,13 +48,27 @@ const Sidebar = ({isOpen, setIsOpen, menuItems}) => {
 */}
           <div className='p-4 border-t border-gray-100'>
               <div className='space-y-1'>
-                  <Link to='/profile' className='flex items-center space-x-3 p-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all'>
-                      <User size={20} />
-                      <span className='font-medium text-sm'>My Profile</span>
-                  </Link>
-                  <button className='w-full flex items-center space-x-3 p-3 rounded-xl text-red-500 hover:bg-red-50 transition-all'>
+                  {/*<Link to='/profile' className='flex items-center space-x-3 p-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all'>*/}
+                  {/*    <User size={20} />*/}
+                  {/*    <span className='font-medium text-sm'>My Profile</span>*/}
+                  {/*</Link>*/}
+                  <button
+                      onClick={() => {
+                          isAuthenticated ? logout() : navigate('/login');
+                      }}
+                      className='w-full flex items-center space-x-3 p-3 rounded-xl text-red-500 hover:bg-red-50 transition-all'
+                  >
+                      {isAuthenticated ? (
+                          <>
                       <LogOut size={20} />
                       <span className='font-medium text-sm'>Logout</span>
+                          </>
+                      ) : (
+                          <>
+                             <LogIn size={20} />
+                              <span className='font-medium text-sm'>Login</span>
+                          </>
+                      )}
                   </button>
               </div>
           </div>

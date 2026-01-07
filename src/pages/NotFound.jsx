@@ -5,7 +5,7 @@ const NotFound = () => {
         <div>
             <h1>404!</h1>
             No Such Page exist. Go to
-            <Link to="/">Home</Link>
+            <Link to="/">{' Home'}</Link>
         </div>
     )
 }

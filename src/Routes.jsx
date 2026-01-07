@@ -9,10 +9,10 @@ import Analytics from './pages/Analytics.jsx';
 import Settings from "./pages/Settings.jsx";
 import SubscriptionForm from "./components/SubscriptionForm.jsx";
 import Subscriptions from "./pages/Subscriptions.jsx";
+import SubscriptionDetail from "./pages/SubscriptionDetail.jsx";
+import SignUp from "./pages/SignUp.jsx";
 
 
-
-const isUserAuthenticated = true;
 
 const router = createBrowserRouter([
     {
@@ -29,19 +29,19 @@ const router = createBrowserRouter([
                 element: <>About</>,
             },
             {
+              path: 'sign-up',
+                element: <SignUp />,
+            },
+            {
                 path: 'login',
                 element: <Login />,
             },
             {
-                element: <ProtectedRoute isAuthenticated={isUserAuthenticated} />,
+                element: <ProtectedRoute />,
                 children: [
                     {
                         path: 'dashboard',
                         element: <Dashboard />,
-                    },
-                    {
-                        path: 'profile',
-                        element: (<h2>Profile Page</h2>)
                     },
                     {
                       path: 'add-subscription',
@@ -54,6 +54,18 @@ const router = createBrowserRouter([
                     {
                         path: 'subscriptions',
                         element: <Subscriptions />,
+                        children: [
+                            {
+                                path: ':subscriptionId',
+                                element: <SubscriptionDetail />,
+                                children: [
+                                    {
+                                        path: 'edit',
+                                        element: <SubscriptionForm />,
+                                    }
+                                ]
+                            }
+                        ]
                     },
                     {
                         path: 'settings',
