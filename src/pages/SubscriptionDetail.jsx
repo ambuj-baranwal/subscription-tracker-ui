@@ -5,13 +5,20 @@ import { useSubscription } from "../hooks/useSubscription";
 const SubscriptionDetail = () => {
     const { subscriptionId } = useParams();
     const navigate = useNavigate();
-    const { getSubscriptionById, deleteSubscription, updateSubscription, isLoading } = useSubscription();
+    const { subscriptions, deleteSubscription, updateSubscription, isLoading } = useSubscription();
 
-    const subscription = getSubscriptionById(subscriptionId);
-    console.log('Logging at Subscription Detail Page',subscription);
+    const subscription = subscriptions?.find(s => s.id === subscriptionId);
+    // console.log('Logging at Subscription Detail Page',subscription);
 
     if (isLoading) return <div>Loading...</div>;
     if (!subscription) return <div>Subscription not found</div>;
+
+    const handleDelete = async () => {
+        if(window.confirm("Are you sure you want to delete this subscription?")) {
+            await deleteSubscription(subscription.id);
+            navigate("/dashboard");
+        }
+    }
 
     return (
         <div className="max-w-3xl mx-auto space-y-6">
@@ -22,7 +29,7 @@ const SubscriptionDetail = () => {
 
             <div className="bg-white rounded-xl p-6 shadow space-y-6">
 
-                {/* HEADER */}
+
                 <div className="flex justify-between items-center">
                     <h1 className="text-2xl font-bold">{subscription.name}</h1>
 
@@ -35,7 +42,7 @@ const SubscriptionDetail = () => {
                         </button>
 
                         <button
-                            onClick={() => deleteSubscription.mutate(subscription.id)}
+                            onClick={handleDelete}
                             className="flex items-center gap-2 px-3 py-1 rounded bg-red-50 text-red-600"
                         >
                             <Trash2 size={16}/> Delete

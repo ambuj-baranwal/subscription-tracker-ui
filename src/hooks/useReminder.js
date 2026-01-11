@@ -81,9 +81,9 @@ export const useReminder = (reminderId = null) => {
         isError: remindersQuery.isError,
         error: remindersQuery.error,
 
-        createReminder: createReminderMutation.mutate,
-        updateReminder: updateReminderMutation.mutate,
-        deleteReminder: deleteReminderMutation.mutate,
+        createReminder: createReminderMutation.mutateAsync,
+        updateReminder: updateReminderMutation.mutateAsync,
+        deleteReminder: deleteReminderMutation.mutateAsync,
 
         isCreating: createReminderMutation.isPending,
         isUpdating: updateReminderMutation.isPending,

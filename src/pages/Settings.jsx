@@ -3,7 +3,7 @@ import { LogOut, User, Mail, Calendar } from "lucide-react";
 
 const Settings = () => {
     const { user, isLoading, logout, isAuthenticated } = useAuth();
-    console.log(user)
+    // console.log(user)
 
     if (isLoading) {
         return (

@@ -29,12 +29,12 @@ const router = createBrowserRouter([
                 element: <>About</>,
             },
             {
-              path: 'sign-up',
-                element: <SignUp />,
-            },
-            {
                 path: 'login',
                 element: <Login />,
+            },
+            {
+              path: 'sign-up',
+                element: <SignUp />,
             },
             {
                 element: <ProtectedRoute />,
@@ -54,18 +54,14 @@ const router = createBrowserRouter([
                     {
                         path: 'subscriptions',
                         element: <Subscriptions />,
-                        children: [
-                            {
-                                path: ':subscriptionId',
-                                element: <SubscriptionDetail />,
-                                children: [
-                                    {
-                                        path: 'edit',
-                                        element: <SubscriptionForm />,
-                                    }
-                                ]
-                            }
-                        ]
+                    },
+                    {
+                        path: 'subscriptions/:subscriptionId',
+                        element: <SubscriptionDetail />,
+                    },
+                    {
+                         path: 'subscriptions/:subscriptionId/edit',
+                         element: <SubscriptionForm />,
                     },
                     {
                         path: 'settings',

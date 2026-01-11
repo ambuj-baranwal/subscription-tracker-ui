@@ -1,23 +1,14 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {api} from "../lib/api.js";
 import {useAuth} from "./useAuth.js";
+import {subscriptionService} from "../services/subscription.service.js";
 
 
-const fetchSubscriptionStatus = async () => {
-    const response = await api.get('/subscriptions');
-    // console.log(response.data.data)
-    return response.data.data;
-};
-
-const createSubscription = async (planDetails) => {
-    const response = await api.post('/subscriptions', planDetails);
-    return response.data.data;
-};
 
 
 const getSubscriptionById = async (id) => {
     const response = await api.get(`/subscriptions/${id}`);
-    return response.data;
+    return response.data.data;
 };
 
 const deleteSubscriptionById = async (id) => {
@@ -37,26 +28,26 @@ export const useSubscription = () => {
 
     const subscriptionQuery = useQuery({
         queryKey: ['subscription'],
-        queryFn: fetchSubscriptionStatus,
+        queryFn: subscriptionService.getAll,
         enabled: isAuthenticated
     });
 
     const createSubscriptionMutation = useMutation({
-        mutationFn: createSubscription,
+        mutationFn: subscriptionService.create,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['subscription'] });
         }
     });
 
     const deleteSubscriptionMutation = useMutation({
-        mutationFn: deleteSubscriptionById,
+        mutationFn: subscriptionService.delete,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['subscription'] });
         }
     });
 
     const updateSubscriptionMutation = useMutation({
-        mutationFn: updateSubscriptionById,
+        mutationFn: subscriptionService.update,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['subscription'] });
         }
@@ -69,7 +60,7 @@ export const useSubscription = () => {
 
         createSubscription: createSubscriptionMutation.mutate,
         updateSubscription: updateSubscriptionMutation.mutate,
-        deleteSubscription: deleteSubscriptionMutation.mutate,
+        deleteSubscription: deleteSubscriptionMutation.mutateAsync,
 
         isCreating: createSubscriptionMutation.isPending,
         isUpdating: updateSubscriptionMutation.isPending,
